@@ -14,7 +14,7 @@ Also learned a bit about webpack tooling too. So the stack are:
 * sass for styling
 * jquery for UI
 
-So far it already covering basic tetris game mechanic with keyboard controls. I will continue it when i got a chance, eg: add scoring etc.
+So far it already covering basic tetris game mechanic with keyboard controls. I will continue it when i got a chance, eg: add levels, scoring etc.
 
 
 Enjoy.

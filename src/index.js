@@ -2,65 +2,67 @@
 // http://www.bayubayu.com
 
 import $ from "jquery";
-import { Tet } from './scripts/tetrominos';
+import {
+    Tet
+} from './scripts/tetrominos';
+import './styles/style.scss';
 
 console.log('Tetrominos');
 
 function buildTable($el, width, height) {
     let str = '';
     str += '<tbody>';
-    for (let j=0; j<height; j++) {
+    for (let j = 0; j < height; j++) {
         str += '<tr>';
-        for (let i=0; i< width; i++) {
+        for (let i = 0; i < width; i++) {
             str += `<td id="cell-${i}-${j}" class="color-1"></td>`;
         }
         str += '</tr>';
     }
     str += '</tbody>';
-    let tab = $el.append('<table id="tab">'+str+'</table>');
+    let tab = $el.append('<table id="tab">' + str + '</table>');
 }
 
 function updateTable($el, data, width, height) {
     let $tab = $el.find('table').first();
     let index = 0;
-    for (let j=0; j<height;j++) {
-        for (let i=0; i<width; i++) {
-            $tab.find(`#cell-${i}-${j}`).removeClass().addClass(`color-${data[index]}`);
+    for (let j = 0; j < height; j++) {
+        for (let i = 0; i < width; i++) {
+            $tab.find(`#cell-${i}-${j}`).removeClass().addClass(`color-${data[index]} cell-row-${j}`);
             index++;
         }
     }
 }
 
-//$('#table').append('<strong>hello</strong>');
 let $el = $('#table');
-buildTable($el,10,24);
+buildTable($el, 10, 24);
 
 let data = [
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,1,0,0,0,0,0,
-    0,0,0,0,1,0,0,0,0,0,
-    0,0,0,0,1,1,0,0,0,0,
-    
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
+
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 
 updateTable($el, data, 10, 24);
@@ -69,8 +71,9 @@ tet.start();
 let nextLanded = false;
 let nextData = [];
 let lockControl = false;
+let timerId;
 
-let f = ()=>{
+let f = () => {
     lockControl = false;
     console.log('tick');
     if (tet.currentState === tet.STATE.START) {
@@ -87,22 +90,22 @@ let f = ()=>{
         else if (random === 5) shape = 'T'
         else if (random === 6) shape = 'O';
 
-        tet.nextFloatShape(shape,1);
-        let newData = tet._placeFloat(3,0);
+        tet.nextFloatShape(shape, 1);
+        let newData = tet._placeFloat(3, 0);
         if (newData.landed || newData.data === false) {
             alert('Game Over');
+            clearInterval(timerId);
         } else {
             tet.data = newData.data;
         }
 
         tet.currentState = tet.STATE.GAME;
     } else if (tet.currentState === tet.STATE.GAME) {
-        if (nextLanded === true)
-        {
-            console.log('landed'); 
+        if (nextLanded === true) {
+            console.log('landed');
 
             tet._landed = nextData.slice(0);
-            tet.resetFloat();    
+            tet.resetFloat();
 
             let newData = tet.destroy();
             tet._landed = newData.slice(0);
@@ -112,7 +115,7 @@ let f = ()=>{
             lockControl = true;
         } else {
             // detect if current position is already landed
-            let newData = tet._placeFloat(tet._floatX,tet._floatY);
+            let newData = tet._placeFloat(tet._floatX, tet._floatY);
             if (newData.landed) {
                 console.log('hey this is locked!!!!');
                 nextLanded = true;
@@ -124,7 +127,7 @@ let f = ()=>{
             if (landed) {
                 nextLanded = true;
                 nextData = obj.data.slice(0);
-            }    
+            }
 
             // locked condition?
             //console.log('DATA',obj.data);
@@ -132,21 +135,21 @@ let f = ()=>{
             //     console.log('LOCKED CONDITION!');
             //     nextLanded = true;
             // }
-            console.log('nextLanded',nextLanded);
+            console.log('nextLanded', nextLanded);
         }
 
     }
     // tet.next();
-    updateTable($el, tet.getData(), 10,24);    
+    updateTable($el, tet.getData(), 10, 24);
 }
 
 // game loop
-let timerId = setInterval(f,500);
+timerId = setInterval(f, 500);
 
-updateTable($el, tet.getData(), 10,24);
+updateTable($el, tet.getData(), 10, 24);
 
-$(document).keydown((ev)=>{
-    console.log('hey',ev.which);
+$(document).keydown((ev) => {
+    console.log('hey', ev.which);
     if (lockControl) {
         return false;
     }
@@ -158,27 +161,33 @@ $(document).keydown((ev)=>{
     }
     if (ev.which === 37) {
         let obj = tet.move('l');
-        updateTable($el, tet.getData(), 10,24);    
-        if (obj.landed)             { nextLanded = true; 
+        updateTable($el, tet.getData(), 10, 24);
+        if (obj.landed) {
+            nextLanded = true;
             nextData = obj.data.slice(0);
             // tet.resetFloat();    
             // lockControl = true;
-        
-        } else { nextLanded = false; }
+
+        } else {
+            nextLanded = false;
+        }
     } else if (ev.which === 39) {
         let obj = tet.move('r');
-        updateTable($el, tet.getData(), 10,24);    
-        if (obj.landed)             { nextLanded = true; 
+        updateTable($el, tet.getData(), 10, 24);
+        if (obj.landed) {
+            nextLanded = true;
             nextData = obj.data.slice(0);
             // tet.resetFloat();    
             // lockControl = true;
-        
-        } else { nextLanded = false; }
+
+        } else {
+            nextLanded = false;
+        }
 
     } else if (ev.which === 38) {
         let rotateResult = tet.rotateFloatShape('r')
         if (rotateResult.rotated) {
-            updateTable($el, tet.getData(), 10,24);
+            updateTable($el, tet.getData(), 10, 24);
             if (rotateResult.landed) {
                 nextLanded = true;
                 nextData = rotateResult.data.slice(0);
@@ -188,11 +197,12 @@ $(document).keydown((ev)=>{
         }
     } else if (ev.which === 40) {
         let obj = tet.move('d');
-        updateTable($el, tet.getData(), 10,24);    
-        if (obj.landed)             { nextLanded = true; 
+        updateTable($el, tet.getData(), 10, 24);
+        if (obj.landed) {
+            nextLanded = true;
             nextData = obj.data.slice(0);
             // tet.resetFloat();    
-        
+
         } //else { nextLanded = false; }
 
     }

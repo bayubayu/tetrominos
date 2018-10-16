@@ -32,7 +32,7 @@ module.exports = function(environment) {
             }
         ),
         new ExtractTextPlugin({
-            filename: '../css/bundle.css'
+            filename: './css/bundle.css'
 
         })
     ],
@@ -44,7 +44,8 @@ module.exports = function(environment) {
                         {
                             loader: "css-loader",
                             options: {
-                                sourceMap: true
+                                sourceMap: true,
+                                minimize: (environment === 'production')? true : false
                             }
                         }, {
                             loader: "sass-loader",
