@@ -4,7 +4,9 @@ This is tetris clone using javascript. My favourite classic game.
 
 I tried to separate game logic (as plain JS) and UI (html+jquery). There's simple unit testing too.
 
-Demo here
+![Screenshot](screenshot.png)
+
+[Demo](https://bayubayu.github.io/demo/tetrominos/)
 
 Also learned a bit about webpack tooling too. So the stack are:
 
